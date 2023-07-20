@@ -20,7 +20,7 @@ After you have requested the <b>Account Data</b> from Spotify (The one received 
 	<li>StreamingHistory<b>N</b>.json, where N is the number and depends on the number records you have</li>
 </ul>
 
-<br>
+#### Columns in StreamingHistoryN.json
 For the sake of this project, we will only need StreamingHistory<b>N</b>.json. In these files, it only contains the following columns in JSON format:
 
 <ul>
@@ -46,14 +46,15 @@ An example of the Last 12 Months Record row looks like this:
 ```
 
 ### Full Record
-After you have requested the <b>Account Data</b> from Spotify (The one received in 5 days), you will receive a zip file contains the following:
+After you have requested the <b>Account Data</b> from Spotify (The one received in 30 days, Spotify refers it as <b>Extended Streaming History</b>), you will receive a zip file contains the following:
 <ul>
-	<li>Coming soon...</li>
-	<li></li>
+	<li>ReadMeFirst_ExtendedStreamingHistory</li>
+  <li>StreamingHistory<b>N</b>.json, where N is the number and depends on the number records you have</li>
 </ul>
 <br><br>
-<b>More details are coming soon...</b>
+The zip file does not contain other files available in the Last 12 Months Record. However, the Streaming History files contain more columns in the Extended Streaming History. <b>It is preferred to upload the Full Record to the data lake!</b>
 
+#### Columns in StreamingHistoryN.json
 <br><br>
 An example of the Full Record row looks like this:
 ```

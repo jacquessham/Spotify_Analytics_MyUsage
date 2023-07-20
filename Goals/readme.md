@@ -8,16 +8,32 @@ We have two main goals for this solution:
 </ul>
 
 ## Data Lake Requirement
+<ul>
+	<li>Able to identify users</li>
+	<li>Store source data in flatfiles partitioned by Month/year</li>
+	<li>A centralized relational database for analytics and machine learning</li>
+</ul>
+
+<br>
 Coming soon...
 
 ## Dashboard Requirement
-KPI:
 <ul>
-	<li>Number of times played</li>
-	<li>Total Played Time</li>
-	<li>Average/Minimum/Maximum played time</li>
-	<li>Number of Skipped songs</li>
-	<li>More coming soon...</li>
+	<li>KPI:
+		<ul>
+			<li>Number of times played</li>
+			<li>Total Played Time</li>
+			<li>Average/Minimum/Maximum played time</li>
+			<li>Number of distinct artists</li>
+			<li>Number of distinct Album</li>
+			<li>Number/Percentage of Skipped songs</li>
+			<li>Number/Percentage of shuffled songs</li>
+			<li>Number/Percentage of songs played offline</li>
+			<li>More coming soon...</li>
+		</ul>
+	</li>
+	<li>Trend Analysis</li>
+	<li>Anomaly Analysis (On Trend and Demographic)</li>
 </ul>
 
 <br><br>
