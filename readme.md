@@ -20,7 +20,6 @@ We will be using the following tools:
 
 <ul>
 	<li>Docker</li>
-	<li>MongoDB</li>
 	<li>Postgres</li>
 	<li>Airflow</li>
 	<li>Python 
