@@ -15,5 +15,8 @@ The listen record data is obtained from Spotify that is the record of what songs
 ## ETL Pipeline
 The proposed ETL pipeline looks like this:
 <img src=etl_pipeline.png>
+
+<br>
+You may find more details in the [ELT](/ELT) folder.
 <br><br>
 Coming soon...

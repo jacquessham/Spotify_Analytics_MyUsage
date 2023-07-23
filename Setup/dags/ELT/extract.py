@@ -28,16 +28,17 @@ def build_insert_query(data_type, record, filename):
 		for col in cols:
 			query += f"{str(col)}, "
 		# Filename and upload_time are not in the file
-		query += f"filename, upload_time) values ("
+		query += f"filename, upload_time, record_type) values ("
 		# Pass value
 		for col in cols:
 			query += f"'{str(record[col])}'', "
-		query += f"'{filename}'', {datetime.now()})"
+		query += f"'{filename}'', {datetime.now()}, '{data_type}')"
 	elif data_type == 'last_12mos':
 		query += (f"(ts, master_metadata_album_artist_name,"
-				f"master_metadata_track_name,ms_played) values"
+				f"master_metadata_track_name,ms_played,record_type) values"
 				f"('{record['endTime']}', '{record['artistName']}',"
-				f"'{record['trackName']}','{record['msPlayed']}')")
+				f"'{record['trackName']}','{record['msPlayed']}',"
+				f"'{data_type}')")
 	else:
 		query = ''
 
