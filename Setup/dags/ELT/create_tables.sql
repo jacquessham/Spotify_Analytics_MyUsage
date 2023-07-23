@@ -73,6 +73,7 @@ create schema if not exists ctr__data;
 create table if not exists ctr__data.ctr__streaming_history(
 	row_id varchar(512) primary key,
 	ts_timestamp timestamp,
+	ts_epoch varchar(512),
 	ts_date date,
 	username varchar(512),
 	platform varchar(512),
