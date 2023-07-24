@@ -20,3 +20,12 @@ The proposed ETL pipeline looks like this:
 You may find more details in the [ELT](/ELT) folder.
 <br><br>
 Coming soon...
+
+### How to Upload Data?
+There are two folder at this directory for you to upload data: <b>full_data</b> and <b>last_12mos</b>.
+<br><br>
+If you are uploading the full data (The dataset takes 30 days to request), you may simply save the JSON files to the <b>full_data</b> folder.
+<br><br>
+If you are uploading the Last 12 Months data (The dataset takes 3-5 days to request), you would need to first create a folder named with the username. Then, you may save the JSON files to the individual folder. If you are going with this approach, you are expected to saved the records in the individual username folder.
+<br><br>
+Coming soon...

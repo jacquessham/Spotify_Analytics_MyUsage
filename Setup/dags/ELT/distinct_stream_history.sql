@@ -1,8 +1,10 @@
 with unique_history as (
 	select *
 	from ( select *,	
-		row_num() over(partition by ts, username order by record_type) as row_id
-	) as i -- record_type = full or last_12_mos, so full should come first
+		row_num() over(partition by ts::timestamp, username 
+			 -- record_type = full or last_12_mos, so full should come first
+			order by record_type) as row_id
+	) as i
 	where i.row_id = 1
 ) insert into stg__data.stg__streaming_history__unique
 (ts,

@@ -22,18 +22,48 @@ with DAG(
 	schedule_interval='0 4 * * Mon'
 	) as dag:
 	task1 = PostgresOperator(
-		task_id='create_tables',
+		task_id='1__create_tables_src',
 		postgres_conn_id='postgres_airflow_docker_spotify',
-		sql='dags/ELT/create_tables.sql'
+		sql='dags/ELT/create_tables_src.sql'
 		)
-	task2 = PythonOperator(
-		task_id='extract_full',
+	task2 = PostgresOperator(
+		task_id='2__create_tables_stg',
+		postgres_conn_id='postgres_airflow_docker_spotify',
+		sql='dags/ELT/create_tables_stg.sql'
+		)
+	task3 = PostgresOperator(
+		task_id='3__create_tables_ctr',
+		postgres_conn_id='postgres_airflow_docker_spotify',
+		sql='dags/ELT/create_tables_ctr.sql'
+		)
+	task4 = PostgresOperator(
+		task_id='4__create_tables_out',
+		postgres_conn_id='postgres_airflow_docker_spotify',
+		sql='dags/ELT/create_tables_out.sql'
+		)
+	task5 = PythonOperator(
+		task_id='5__extract_full',
 		python_callable=extract_full
 		)
-	task2 = PythonOperator(
-		task_id='extract_last12mos',
+	task6 = PythonOperator(
+		task_id='6__extract_last12mos',
 		python_callable=extract_last12mos
+		)
+	task7 = PostgresOperator(
+		task_id='7__distinct_streaming_history',
+		postgres_conn_id='postgres_airflow_docker_spotify',
+		sql='dags/ELT/distinct_stream_history.sql'
+		)
+	task8 = PostgresOperator(
+		task_id='8__transform_streaming_history',
+		postgres_conn_id='postgres_airflow_docker_spotify',
+		sql='dags/ELT/transform_stream_history.sql'
+		)
+	task9 = PostgresOperator(
+		task_id='9__insert_out_streaming_history',
+		postgres_conn_id='postgres_airflow_docker_spotify',
+		sql='dags/ELT/out_stream_history.sql'
 		)
 
 
-	task1 >> [task2, task3]
+	[task1, task2, task3, task4] >> [task5, task6] >> task7 >> task8 >> task9

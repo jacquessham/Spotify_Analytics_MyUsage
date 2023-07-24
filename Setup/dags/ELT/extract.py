@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import datetime
 import pandas as pd
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 
@@ -13,7 +14,7 @@ def declare_conn():
 
 def get_allfiles(cursor, root_dir):
     cursor.execute(
-        """ select distinct filename from src__data.src__upload_log;"""
+        """ select distinct filename from src__data.src__upload_log"""
         )
     files_uploaded = [row[0] for row in cursor.fetchall()]
 
@@ -50,7 +51,7 @@ def build_insert_query(data_type, record, filename):
 
     return query
 
-def read_files(conn, data_type, list_files):
+def read_files(cursor, data_type, list_files):
     for filename in list_files:
         with open(filename) as j:
             records = json.load(j)
@@ -59,16 +60,51 @@ def read_files(conn, data_type, list_files):
                 filename.split('/')[-1])
             cursor.execute(insert_query)
 
+def update_log(cursor, data_type, list_files):
+    for file in list_files:
+        source_name = file.split('/')
+        source_directory = '/'.join(source_name[:-1])
+        filename = source_name[-1]
+        if data_type == 'full':            
+            query = """
+                insert into src__data.src__upload_log(
+                    update_date, filename,
+                    source_directory, record_type
+                ) values (
+            """
+            query += f"{datetime.now().date()}, '{filename}',"
+            query += f"'{source_directory}', '{data_type}')"
+
+
+        elif data_type == 'last_12mos':
+            source_username = source_name[-2]
+            query = """
+                insert into src__data.src__upload_log(
+                    update_date, filename, source_username,
+                    source_directory, record_type
+                ) values (
+            """
+            query += f"{datetime.now().date()}, '{filename}',"
+            query += f"{source_username},"
+            query += f"'{source_directory}', '{data_type}')"
+
+        else:
+            query = ''
+
+        cursor.execute(query)
+
 def extract_full():
     root_dir = 'Data/full_data'
     conn, cursor = declare_conn()
     list_files = get_allfiles(cursor, root_dir)
-    read_files(conn, 'full', list_files)
+    read_files(cursor, 'full', list_files)
+    update_log(cursor, 'full', list_files)
     conn.close()
 
 def extract_last12mos():
     root_dir = 'Data/last_12mos'
     conn, cursor = declare_conn()
     list_files = get_allfiles(cursor, root_dir)
-    read_files(conn, 'last_12mos', list_files)
+    read_files(cursor, 'last_12mos', list_files)
+    update_log(cursor, 'last_12mos', list_files)
     conn.close()
