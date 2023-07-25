@@ -32,3 +32,4 @@ Coming soon...
 
 ## Notes
 * Timestamp in Last 12 Months data rounds to minute, while Full data rounds to ms. When compare between both datasets, be sure to date_trunc to minute.
+* If the song is played offline, ts is the same as offline_timestamp

@@ -1,7 +1,8 @@
 with unique_history as (
 	select *
 	from ( select *,	
-		row_number() over(partition by date_trunc('minute',ts::timestamp), username 
+		row_number() over(partition by date_trunc('minute',ts::timestamp), username,
+			 master_metadata_track_name
 			 -- record_type = full or last_12_mos, so full should come first
 			 -- last_12_mos only round to minute, full round to ms
 			order by record_type) as row_id
@@ -52,7 +53,7 @@ offline,
 offline_timestamp,
 incognito_mode
 from unique_history
-where concat(username,ts) not in (
-	select concat(username,ts) from stg__data.stg__streaming_history__unique
+where concat(username,ts,master_metadata_track_name) not in (
+	select concat(username,ts,master_metadata_track_name) from stg__data.stg__streaming_history__unique
 ) 
 ;

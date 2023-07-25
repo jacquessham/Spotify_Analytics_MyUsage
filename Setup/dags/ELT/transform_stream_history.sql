@@ -24,7 +24,7 @@ insert into ctr__data.ctr__streaming_history(
 	offline_timestamp,
 	incognito_mode
 ) select 
-concat(username, date_part('epoch',date_trunc('minute',ts::timestamp))::varchar),
+concat(username, date_part('epoch',date_trunc('minute',ts::timestamp))::varchar,master_metadata_track_name),
 date_trunc('minute',ts::timestamp),
 date_part('epoch', date_trunc('minute',ts::timestamp)),
 ts::date,
@@ -49,7 +49,7 @@ offline::boolean,
 to_timestamp(offline_timestamp::numeric),
 incognito_mode::boolean
 from stg__data.stg__streaming_history__unique
-where concat(username, date_part('epoch',date_trunc('minute',ts::timestamp))::varchar) not in (
+where concat(username, date_part('epoch',date_trunc('minute',ts::timestamp))::varchar,master_metadata_track_name) not in (
 	select row_id from ctr__data.ctr__streaming_history
 )
 ;
