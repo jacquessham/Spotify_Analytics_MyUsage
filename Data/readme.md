@@ -29,3 +29,6 @@ If you are uploading the full data (The dataset takes 30 days to request), you m
 If you are uploading the Last 12 Months data (The dataset takes 3-5 days to request), you would need to first create a folder named with the username. Then, you may save the JSON files to the individual folder. If you are going with this approach, you are expected to saved the records in the individual username folder.
 <br><br>
 Coming soon...
+
+## Notes
+* Timestamp in Last 12 Months data rounds to minute, while Full data rounds to ms. When compare between both datasets, be sure to date_trunc to minute.

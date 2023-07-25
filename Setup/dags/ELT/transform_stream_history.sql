@@ -23,9 +23,10 @@ insert into ctr__data.ctr__streaming_history(
 	offline,
 	offline_timestamp,
 	incognito_mode
-) select concat(username,date_part('epoch',ts::timestamp)::varchar),
-ts::timestamp,
-date_part('epoch',ts::timestamp),
+) select 
+concat(username, date_part('epoch',date_trunc('minute',ts::timestamp))::varchar),
+date_trunc('minute',ts::timestamp),
+date_part('epoch', date_trunc('minute',ts::timestamp)),
 ts::date,
 username,
 platform,
@@ -37,12 +38,18 @@ master_metadata_track_name,
 master_metadata_album_artist_name,
 master_metadata_album_album_name,
 spotify_track_uri,
+episode_name,
+episode_show_name,
 spotify_episode_uri,
 reason_start,
 reason_end,
 shuffle::boolean,
 skipped::boolean,
 offline::boolean,
-offline_timestamp::timestamp,
+to_timestamp(offline_timestamp::numeric),
 incognito_mode::boolean
 from stg__data.stg__streaming_history__unique
+where concat(username, date_part('epoch',date_trunc('minute',ts::timestamp))::varchar) not in (
+	select row_id from ctr__data.ctr__streaming_history
+)
+;

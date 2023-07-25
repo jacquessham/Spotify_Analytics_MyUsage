@@ -35,5 +35,8 @@ insert into out__data.out__streaming_history(
 	offline_timestamp
 from ctr__data.ctr__streaming_history
 where episode_name is null and episode_show_name is null and 
-	spotify_episode_uri is null
+	spotify_episode_uri is null and
+	row_id not in (
+		select row_id from out__data.out__streaming_history
+		)
 ; -- Only want song data, fitler out podcast data
