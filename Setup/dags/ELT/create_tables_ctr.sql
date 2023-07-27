@@ -28,3 +28,19 @@ create table if not exists ctr__data.ctr__streaming_history(
 	offline_timestamp timestamp,
 	incognito_mode boolean
 );
+
+create table if not exists ctr__data.ctr__sql_streaming_history_record_type(
+	record_id varchar(512) primary key,
+	row_id varchar(512),
+	record_type varchar(512),
+	last_updated_date date
+);
+
+create table if not exists ctr__data.ctr__json_streaming_history_record_type(
+	record_id varchar(512) primary key,
+	row_id varchar(512),
+	record_type varchar(512),
+	filename varchar(512),
+	file_directory varchar(512),
+	last_updated_date date
+);

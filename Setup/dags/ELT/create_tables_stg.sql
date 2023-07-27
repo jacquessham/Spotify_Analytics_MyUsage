@@ -3,6 +3,7 @@ create schema if not exists stg__data;
 
 -- Table to merge full and last 12 mos data and prevent duplication
 create table if not exists stg__data.stg__streaming_history__unique(
+	row_id varchar(512) primary key,
 	ts varchar(512),
 	username varchar(512),
 	platform varchar(512),
@@ -23,5 +24,6 @@ create table if not exists stg__data.stg__streaming_history__unique(
 	skipped varchar(512),
 	offline varchar(512),
 	offline_timestamp varchar(512),
-	incognito_mode varchar(512)
+	incognito_mode varchar(512),
+	record_type varchar(512)
 );

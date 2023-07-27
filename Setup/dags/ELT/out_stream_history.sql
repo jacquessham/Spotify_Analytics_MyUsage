@@ -1,3 +1,5 @@
+delete from out__data.out__streaming_history;
+
 insert into out__data.out__streaming_history(
 	row_id,
 	ts_timestamp,

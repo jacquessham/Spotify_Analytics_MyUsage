@@ -34,6 +34,7 @@ Coming soon...
 	</li>
 	<li>Trend Analysis</li>
 	<li>Anomaly Analysis (On Trend and Demographic)</li>
+	<li>Playlist Analysis</li>
 </ul>
 
 <br><br>
