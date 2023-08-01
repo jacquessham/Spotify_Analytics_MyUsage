@@ -17,7 +17,7 @@ default_args = {
 
 with DAG(
 	default_args=default_args,
-	dag_id='dev_elt_v2',
+	dag_id='dev_elt_v1',
 	start_date=datetime(2023,7,15),
 	schedule_interval='0 4 * * Mon'
 	) as dag:
@@ -55,17 +55,12 @@ with DAG(
 		sql='ELT/distinct_stream_history.sql'
 		)
 	task8 = PostgresOperator(
-		task_id='8__transform_streaming_history_upgrade',
+		task_id='8__transform_streaming_history',
 		postgres_conn_id='postgres_airflow_docker_spotify',
-		sql='ELT/transform_stream_history_upgrade.sql'
+		sql='ELT/transform_stream_history.sql'
 		)
 	task9 = PostgresOperator(
-		task_id='9__transform_streaming_history_direct_insert',
-		postgres_conn_id='postgres_airflow_docker_spotify',
-		sql='ELT/transform_stream_history_direct_insert.sql'
-		)
-	task10 = PostgresOperator(
-		task_id='10__insert_out_streaming_history',
+		task_id='9__insert_out_streaming_history',
 		postgres_conn_id='postgres_airflow_docker_spotify',
 		sql='ELT/out_stream_history.sql'
 		)
@@ -75,6 +70,5 @@ with DAG(
 	task2 >> [task5, task6] 
 	task3 >> [task5, task6] 
 	task4 >> [task5, task6] 
-	task5 >> task7
-	task6 >> task7
-	task7 >> task8 >> task9 >> task10
+	task5 >> task7 >> task8 >> task9
+	task6 >> task7 >> task8 >> task9

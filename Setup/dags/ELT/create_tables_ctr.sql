@@ -25,7 +25,7 @@ create table if not exists ctr__data.ctr__streaming_history(
 	shuffle boolean,
 	skipped boolean,
 	offline boolean,
-	offline_timestamp timestamp,
+	offline_timestamp int,
 	incognito_mode boolean
 );
 

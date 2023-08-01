@@ -19,5 +19,5 @@ create table if not exists out__data.out__streaming_history(
 	shuffle boolean,
 	skipped boolean,
 	offline boolean,
-	offline_timestamp timestamp
+	offline_timestamp int
 );

@@ -6,8 +6,9 @@ with unique_history as (
 		master_metadata_album_album_name, spotify_track_uri, episode_name,
 		episode_show_name, spotify_episode_uri, reason_start, reason_end, shuffle,
 		skipped, offline, offline_timestamp, incognito_mode, record_type
+	from src__data.src__streaming_history
 ) insert into stg__data.stg__streaming_history__unique(
-	row_id
+	row_id,
 	ts,
 	username,
 	platform,
@@ -30,7 +31,7 @@ with unique_history as (
 	offline_timestamp,
 	incognito_mode,
 	record_type
-) select concat(username,ts_trunc,master_metadata_track_name,'_',record_type)
+) select concat(username,ts_trunc,master_metadata_track_name,'_',record_type) as row_id,
 ts_trunc,
 username,
 platform,
@@ -54,4 +55,7 @@ offline_timestamp,
 incognito_mode, 
 record_type
 from unique_history
+where concat(username,ts_trunc,master_metadata_track_name,'_',record_type) not in (
+	select row_id from stg__data.stg__streaming_history__unique
+)
 ;
