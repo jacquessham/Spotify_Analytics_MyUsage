@@ -15,5 +15,33 @@ The listen record data is obtained from Spotify that is the record of what songs
 ## ETL Pipeline
 The proposed ETL pipeline looks like this:
 <img src=etl_pipeline.png>
+
+<br>
+You may find more details in the [ELT](/ELT) folder.
 <br><br>
 Coming soon...
+
+### How to Upload Data?
+There are two folder at this directory for you to upload data: <b>full_data</b> and <b>last_12mos</b>.
+<br><br>
+If you are uploading the full data (The dataset takes 30 days to request), you may simply save the JSON files to the <b>full_data</b> folder.
+<br><br>
+If you are uploading the Last 12 Months data (The dataset takes 3-5 days to request), you would need to first create a folder named with the username. Then, you may save the JSON files to the individual folder. If you are going with this approach, you are expected to saved the records in the individual username folder, because it is the only way for the pipeline to identify username in the Last 12 Months data. To upload datasets from another users, simple create a folder with the username in the <i>last_12mos</i> folder, and save the data in the username folder.
+<br><br>
+We have prepared the sample datasets for demostration and the directory looks like this:
+
+```
+- Data
+|- full_data
+ |- Sample_full.json
+ |- Sample_full_copy.json
+ |- Sample_overlapped.json
+|- last_12mos
+ |- jacquessham
+  |- Sample_last12mos.json
+```
+
+
+## Notes
+* Timestamp in Last 12 Months data rounds to minute, while Full data rounds to ms. When compare between both datasets, be sure to date_trunc to minute.
+* If the song is played offline, ts is the same as offline_timestamp

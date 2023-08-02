@@ -14,9 +14,6 @@ We have two main goals for this solution:
 	<li>A centralized relational database for analytics and machine learning</li>
 </ul>
 
-<br>
-Coming soon...
-
 ## Dashboard Requirement
 <ul>
 	<li>KPI:
@@ -34,7 +31,5 @@ Coming soon...
 	</li>
 	<li>Trend Analysis</li>
 	<li>Anomaly Analysis (On Trend and Demographic)</li>
+	<li>Playlist Analysis</li>
 </ul>
-
-<br><br>
-Coming soon...
