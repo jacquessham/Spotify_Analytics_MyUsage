@@ -16,7 +16,7 @@ The listening records are obtained from Spotify directly. You may request the da
 <br><br>
 Due to privacy, my full listening record will not be posted in this repository but saved in my local machine. However, the pipeline is designed to ingest dynamically which is not user-specify. Therefore, you may still able to utilize the pipeline for your own use.
 <br><br>
-You may find more details about the data from Spotify, data lake structure, or anything about data in the [Data](/Data) folder.
+You may find more details about the data from Spotify, data lake structure, or anything about data in the [Data](/Data) folder, or the ELT Overview in the [ELT](/Data/ELT) folder.
 <br><br>
 Currently, we are only support the attributes offered by Spotify. The data provided from Spotify does not have sufficient attribute data on songs' metadata. It may be followed up in the future.
 
@@ -48,6 +48,9 @@ Coming soon...
 
 ## Setup
 To initiate the backend and dashboard, you would initiate the Docker network defined in the Setup folder and it would automatically set up for you. You may find more details on how to setup the solution with Docker in the [Setup](/Setup) folder.
+
+## Instructions after Setup
+Coming soon...
 
 
 ## Future Development
