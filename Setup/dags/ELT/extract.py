@@ -116,7 +116,10 @@ def extract_full():
 def extract_last12mos():
     root_dir = 'Data/last_12mos'
     conn, cursor = declare_conn()
-    list_files = get_allfiles(cursor, root_dir)
+    list_files = []
+    all_dirs = [f.path for f in os.scandir(root_dir)if f.is_dir()]
+    for curr_dir in all_dirs:
+        list_files += get_allfiles(cursor, curr_dir)
     read_files(cursor, 'last_12mos', list_files)
     update_log(cursor, 'last_12mos', list_files)
     conn.close()

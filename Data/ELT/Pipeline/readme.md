@@ -33,7 +33,7 @@ Task 6 would extract the datasets available in the <b>last_12mos</b> folder unde
 <br><br>
 This task would utilize the functions available in <i>extract.py</i> saved under the [ELT](../../../Setup/dags/ELT) folder under the [dags](../../../Setup/dags) folder.
 <br><br>
-<b>Bug to be fixed: Currently the pipeline does not validity the username folders. If the files do not saved under a username, the username in the database would become null.</b>
+<b>If the files do not saved under a username folder, the data in those files would not be extracted and uploaded to database!</b>
 
 #### Task 7: Remove Duplicated Records
 Task 7 would remove duplicated records if there are two files with two different file names but with identical content, the pipeline would detect the duplicated rows and remove it. The pipeline would not update the data between Last 12 Months records and full records. For example, if there are two identical stream history loaded from <i>a.json</i> and <i>b.json</i>, <i>src__data.src__streaming_history</i> table should contain both records:
@@ -93,4 +93,7 @@ This task would utilize the functions available in <i>out_stream_history.sql</i>
 Not available. This task will be updated in the future release.
 
 #### Task 12: Insert Records in the Central Flatfile Storage Schema
+Not available. This task will be updated in the future release.
+
+#### Task 13: Remove Caches in GoodData after Output Table has Refreshed
 Not available. This task will be updated in the future release.

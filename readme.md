@@ -61,6 +61,10 @@ Coming soon...
 	<li>v1.1.0 - Playlist Analysis via Plotly Dash</li>
 </ul>
 
+
+<br><br>
+More details in the [Release Notes](/Release_Notes)
+
 Note:
 <ul>
 	<li>Playtlist Analysis discover low play rate songs and make recommendation to remove from playlist</li>
