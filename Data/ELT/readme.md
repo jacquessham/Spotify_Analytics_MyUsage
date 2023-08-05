@@ -4,6 +4,7 @@ The ELT section explains the overview of the database and how the ELT data pipel
 
 ## Overview
 <img src=elt_step1.png>
+<img src=elt_step2.png>
 
 <br><br>
 The whole solution will use Postgres as the database, and <b>spotify</b> is the database name the solution will be using. The coming sections are the overview of all the schema within the <b>spotify</b> database. For the documentation of the table and data pipeline details, you may find more details in the [Database tables](/Database_Tables) folder and the [Data Pipeline](/Pipeline).

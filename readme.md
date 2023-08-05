@@ -16,7 +16,7 @@ The listening records are obtained from Spotify directly. You may request the da
 <br><br>
 Due to privacy, my full listening record will not be posted in this repository but saved in my local machine. However, the pipeline is designed to ingest dynamically which is not user-specify. Therefore, you may still able to utilize the pipeline for your own use.
 <br><br>
-You may find more details about the data from Spotify, data lake structure, or anything about data in the [Data](/Data) folder, or the ELT Overview in the [ELT](/Data/ELT) folder.
+You may find more details about the data from Spotify, data lake structure, or anything about data in the [Data](/Data) folder, or the ELT Overview in the [ELT](/Data/ELT) folder. However, the scripts of the pipeline are available in the [DAGs](/Setup/dags) folder under the [Setup](/Setup) folder.
 <br><br>
 Currently, we are only support the attributes offered by Spotify. The data provided from Spotify does not have sufficient attribute data on songs' metadata. It may be followed up in the future.
 
