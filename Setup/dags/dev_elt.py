@@ -70,9 +70,17 @@ with DAG(
 		postgres_conn_id='postgres_airflow_docker_spotify',
 		sql='ELT/out_stream_history.sql'
 		)
+	task11 = PythonOperator(
+		task_id='11__export_json_update',
+		python_callable=export_update
+		)
 	task12 = PythonOperator(
 		task_id='12__export_json_direct',
 		python_callable=export_direct
+		)
+	task13 = BashOperator(
+		task_id='13__refresh_output_tables',
+		bash_command='sh gooddata/refresh_output_tables.sh'
 		)
 
 
@@ -82,5 +90,6 @@ with DAG(
 	task4 >> [task5, task6] 
 	task5 >> task7
 	task6 >> task7
-	task7 >> task8 >> task9 >> task10
-	task9 >> task12
+	task7 >> task8 >> task9 >> task10 >> task13
+	task9 >> task11 >> task12
+

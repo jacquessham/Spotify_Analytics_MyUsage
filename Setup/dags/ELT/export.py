@@ -42,6 +42,108 @@ def update_log(cursor, row_id, record_type, filename, file_fullpath):
     """
     cursor.execute(query)
 
+def get_fulldata_rows(cursor, row_ids):
+    # Obtain the column names
+    cursor.execute(
+    """
+    select column_name from information_schema.columns 
+    where table_name = 'ctr__streaming_history';
+    """
+    )
+    ctr_streaming_history_columns = [row[0] for row in cursor.fetchall()]
+
+    # Obtain the fulldata rows
+    query = """
+        select * from ctr__data.ctr__streaming_history
+        where row_id in (
+        """
+    n = len(row_ids)
+    for i in range(n):
+        query += f"'{str(row_ids[i])}'"
+        if i != n-1:
+            query += f", "
+        else:
+            query += f")"
+    cursor.execute(query)
+
+    df = pd.DataFrame(cursor.fetchall(), columns=ctr_streaming_history_columns)
+    df[list(df)] = df[list(df)].astype(str) # Convert all columns to string
+
+    return df
+
+
+def export_update():
+    conn, cursor = declare_conn()
+
+    # Obtain the rows need to update
+    cursor.execute(
+        """
+        select l.row_id as new_row_id, r.row_id as old_row_id, 
+                r.filename, r.file_directory
+        from
+        (select distinct row_id, record_type
+        from ctr__data.ctr__sql_streaming_history_record_type
+        where record_type = 'full') as l
+        join 
+        (select distinct i.row_id, i.filename, i.file_directory,
+            i.latest_type as record_type
+        from
+            (select row_id, record_type, filename, file_directory,
+                first_value(record_type) over(partition by row_id 
+                    order by record_type, last_update_date desc) 
+                    as latest_type
+            from ctr__data.ctr__json_streaming_history_record_type
+        ) as i) as r
+        on replace(l.row_id, '_full', '') = 
+            replace(r.row_id, '_last_12mos', '') and 
+            l.record_type <> r.record_type
+        order by 1
+        """)
+
+    df_rowids = pd.DataFrame(cursor.fetchall(), 
+                        columns=['new_row_id','old_row_id',
+                        'filename','file_directory'])
+
+    # Since the files have been partitioned, loop over each file
+    # and update all rows within the same file
+    for curr_filename, curr_file_directory in 
+            df_rowids[['filename','file_directory']].drop_duplicates():
+        # Find the row_ids need to update
+        df_temp = df_rowids[df_rowids['filename']==curr_filename]
+        curr_ids = df_temp['new_row_id'].tolist()
+
+        # Load the file
+        with open(curr_file_directory,'r') as f1:
+            df_ctr_dict = json.load(f1)
+
+        # Obtain the full data and replace in the file
+        df_fulldata = get_fulldata_rows(cursor, curr_ids)
+
+        # Dispose old records and replace the new records
+        for index, row in df_fulldata.iterrows():
+            curr_row = {}
+
+            # Only save the column that is not null
+            for col in ctr_streaming_history_columns:
+                if row[col] != 'None' and row[col] != 'nan' and \
+                        col not in ['row_id','year_month']:
+                    # Fix float value appear in offline_timestamp 
+                    if col == 'offline_timestamp':
+                        curr_row[col] = str(int(float(row[col])))
+                    else:
+                        curr_row[col] = row[col]
+            
+            # Use new row_id as key in the JSON file
+            df_ctr_dict[row['row_id']] = curr_row
+
+            # Remove old row_id
+            df_ctr_dict.pop(row['row_id'].replace('_full','_last_12mos'))
+
+
+        # Save the file
+        with open(curr_file_directory,'w') as f2:
+            json.dump(df_ctr_dict, f2, indent=4, ensure_ascii=False)
+
 
 def export_direct():
     conn, cursor = declare_conn()
