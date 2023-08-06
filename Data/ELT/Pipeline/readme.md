@@ -89,11 +89,13 @@ Task 10 conduct a full load (Delete existing data and load all data into the out
 <br><br>
 This task would utilize the functions available in <i>out_stream_history.sql</i> saved under the [ELT](../../../Setup/dags/ELT) folder under the [dags](../../../Setup/dags) folder.
 
-#### Task 11: Update Records in Central Flatfile Storage Schema
+#### Task 11: Update Records in Central Flatfile Storage
 Not available. This task will be updated in the future release.
 
-#### Task 12: Insert Records in the Central Flatfile Storage Schema
-Not available. This task will be updated in the future release.
+#### Task 12: Insert Records in the Central Flatfile Storage
+After the new records is available in the <i>ctr__streaming_history</i> table, this task would convert the records to JSON format and save under the <i>Central_Storage_Data</i> folder as JSON files. The data is partitioned by username, year, and month. This task only incrementally insert new records to existing JSON files and do not update existing records in the storage, or create a new file and insert the new records to the newly create JSON files if the JSON files have never been created. 
+<br><br>
+This task would utilize the functions available in <i>export.py</i> saved under the [ELT](../../../Setup/dags/ELT) folder under the [dags](../../../Setup/dags) folder.
 
 #### Task 13: Remove Caches in GoodData after Output Table has Refreshed
 Not available. This task will be updated in the future release.

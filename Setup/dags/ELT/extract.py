@@ -17,14 +17,14 @@ def get_allfiles(cursor, root_dir):
         """ select distinct filename from src__data.src__upload_log"""
         )
     files_uploaded = [row[0] for row in cursor.fetchall()]
-    print(files_uploaded)
+    
 
     files_dir = []
     for root, dirs, files in os.walk(root_dir):
         for file in files:
             if file not in files_uploaded and '.json' in file:
                 files_dir.append(os.path.join(root, file))
-    print(files_dir)
+    
     return files_dir
 
 def build_insert_query(data_type, record, filename, username=None):

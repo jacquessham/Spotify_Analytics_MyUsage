@@ -7,6 +7,7 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from ELT.extract import extract_full, extract_last12mos
+from ELT.export import export_direct
 
 
 default_args = {
@@ -69,6 +70,10 @@ with DAG(
 		postgres_conn_id='postgres_airflow_docker_spotify',
 		sql='ELT/out_stream_history.sql'
 		)
+	task12 = PythonOperator(
+		task_id='12__export_json_direct',
+		python_callable=export_direct
+		)
 
 
 	task1 >> [task5, task6] 
@@ -78,3 +83,4 @@ with DAG(
 	task5 >> task7
 	task6 >> task7
 	task7 >> task8 >> task9 >> task10
+	task9 >> task12
