@@ -7,3 +7,4 @@
 ## Version 0.0.2 (Alpha)
 * Add dashboard <i>2. Songs</i> to GoodData master workspace
 * Fix <i>extract.py</i> bug, now require user to create username folder in the <i>Data/last_12mos</i> folder to upload data
+* ELT Pipeline is now fully function. Task 11-13 are available in <i>elt.py</i>: Transformed data is now also saved in the Central Storage Data Flatfile folder.

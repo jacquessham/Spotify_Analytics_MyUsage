@@ -7,10 +7,15 @@ create temp table row_diff(
 
 -- Get the list of last_12mos data
 with last12_mos_mod_rows as (
-	select row_id
-	from ctr__data.ctr__sql_streaming_history_record_type
-	where record_type = 'last_12mos' and
-	row_id not in (
+	select *
+	from (
+		select *, rank() over (partition by split_part(row_id,'_',1)
+			order by last_updated_date desc, record_type) as update_rank_desc
+		from
+		ctr__data.ctr__sql_streaming_history_record_type
+	) as i
+	where i.record_type = 'last_12mos' and i.update_rank_desc = 1 and
+	i.row_id not in (
 		select distinct row_id 
 		from ctr__data.ctr__sql_streaming_history_record_type
 		where record_type = 'full'

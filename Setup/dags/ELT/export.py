@@ -92,7 +92,8 @@ def export_update():
             i.latest_type as record_type
         from
             (select row_id, record_type, filename, file_directory,
-                first_value(record_type) over(partition by row_id 
+                first_value(record_type) over(partition by 
+                    split_part(row_id,'_',1)
                     order by record_type, last_updated_date desc) 
                     as latest_type
             from ctr__data.ctr__json_streaming_history_record_type

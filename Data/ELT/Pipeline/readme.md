@@ -9,7 +9,16 @@ This section documents the functionality of each task but the scripts can be fou
 ### elt.py
 This is the core DAG for the data pipeline, including creating table and the whole ELT process. There are 13 tasks.
 <br><br>
-More details coming soon...
+The core DAG consists of the following functions:
+<ol>
+    <li>Create tables in the database</li>
+    <li>Read files and upload to the database</li>
+    <li>Transformating incoming data and remove duplicated</li>
+    <li>Update existing data if full dataset is available</li>
+    <li>Export and update data to JSON format</li>
+    <li>Load cleansed data to output tables for dashboard</li>
+    <li>Remove cache in GoodData.CN</li>
+</ol>
 
 #### Task 1-4: Create tables for all Schemas
 Task 1-4 would create tables (if not exists) in the Postgres database for all schemas. The details of the tables can be found in the [Database Tables](../Database_Tables). Each task would execute the following SQL scripts, respective to the schemas:
