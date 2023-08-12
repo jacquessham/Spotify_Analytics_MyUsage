@@ -1,6 +1,9 @@
 # iOS related
 .DS_Store
 
+# Project Management
+todo_list.txt
+
 # Airflow related
 latest
 

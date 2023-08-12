@@ -4,10 +4,11 @@ from datetime import datetime, timedelta
 import json
 import pandas as pd
 from airflow import DAG
+from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from ELT.extract import extract_full, extract_last12mos
-from ELT.export import export_direct
+from ELT.export import export_direct, export_update
 
 
 default_args = {
@@ -80,7 +81,7 @@ with DAG(
 		)
 	task13 = BashOperator(
 		task_id='13__refresh_output_tables',
-		bash_command='sh gooddata/refresh_output_tables.sh'
+		bash_command='ELT/refresh_output_tables.sh'
 		)
 
 

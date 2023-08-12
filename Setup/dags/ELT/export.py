@@ -59,17 +59,20 @@ def get_fulldata_rows(cursor, row_ids):
         """
     n = len(row_ids)
     for i in range(n):
-        query += f"'{str(row_ids[i])}'"
+        curr_id = row_ids[i].replace("'","''")
+        print(curr_id)
+        query += f"'{str(curr_id)}'"
         if i != n-1:
             query += f", "
         else:
             query += f")"
+    print(query)
     cursor.execute(query)
 
     df = pd.DataFrame(cursor.fetchall(), columns=ctr_streaming_history_columns)
     df[list(df)] = df[list(df)].astype(str) # Convert all columns to string
 
-    return df
+    return df, ctr_streaming_history_columns
 
 
 def export_update():
@@ -90,7 +93,7 @@ def export_update():
         from
             (select row_id, record_type, filename, file_directory,
                 first_value(record_type) over(partition by row_id 
-                    order by record_type, last_update_date desc) 
+                    order by record_type, last_updated_date desc) 
                     as latest_type
             from ctr__data.ctr__json_streaming_history_record_type
         ) as i) as r
@@ -106,8 +109,14 @@ def export_update():
 
     # Since the files have been partitioned, loop over each file
     # and update all rows within the same file
-    for curr_filename, curr_file_directory in 
-            df_rowids[['filename','file_directory']].drop_duplicates():
+    # drop_duplicates() will create error if df is empty
+    if df_rowids[['filename','file_directory']].shape[0] > 0:
+        files_and_directory = df_rowids[['filename','file_directory']].drop_duplicates()
+        files_and_directory = files_and_directory.itertuples(index=False)
+    else:
+        files_and_directory = []
+
+    for curr_filename, curr_file_directory in files_and_directory:
         # Find the row_ids need to update
         df_temp = df_rowids[df_rowids['filename']==curr_filename]
         curr_ids = df_temp['new_row_id'].tolist()
@@ -117,7 +126,7 @@ def export_update():
             df_ctr_dict = json.load(f1)
 
         # Obtain the full data and replace in the file
-        df_fulldata = get_fulldata_rows(cursor, curr_ids)
+        df_fulldata, ctr_streaming_history_columns = get_fulldata_rows(cursor, curr_ids)
 
         # Dispose old records and replace the new records
         for index, row in df_fulldata.iterrows():

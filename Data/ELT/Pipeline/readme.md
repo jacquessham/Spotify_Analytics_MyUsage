@@ -1,5 +1,5 @@
 # Data Pipeline
-Coming soon...
+This is the documentation of the Data Pipeline on ingesting data into the database and distribute it for analytical use.
 
 ## ELT Pipeline in Airflow
 <img src=elt_pipeline_airflow.png>
@@ -7,7 +7,7 @@ Coming soon...
 This section documents the functionality of each task but the scripts can be found in the [dags](../../../Setup/dags) folder under the [Setup](../../../Setup) folder.
 
 ### elt.py
-This is the core DAG for the data pipeline, including creating table and the whole ELT process. There are ... tasks...
+This is the core DAG for the data pipeline, including creating table and the whole ELT process. There are 13 tasks.
 <br><br>
 More details coming soon...
 
@@ -90,7 +90,10 @@ Task 10 conduct a full load (Delete existing data and load all data into the out
 This task would utilize the functions available in <i>out_stream_history.sql</i> saved under the [ELT](../../../Setup/dags/ELT) folder under the [dags](../../../Setup/dags) folder.
 
 #### Task 11: Update Records in Central Flatfile Storage
-Not available. This task will be updated in the future release.
+After the new records is available in the <i>ctr__streaming_history</i> table, this task would update the existing Last 12 months data in the <i>Central_Storage_Data</i> to full data if full data is available. This task will locate those files provided by <i>ctr__data.ctr__json_streaming_history_record_type</i>, read the JSON files and replace the entry.
+<br><br>
+This task would utilize the functions available in <i>export.py</i> saved under the [ELT](../../../Setup/dags/ELT) folder under the [dags](../../../Setup/dags) folder.
+
 
 #### Task 12: Insert Records in the Central Flatfile Storage
 After the new records is available in the <i>ctr__streaming_history</i> table, this task would convert the records to JSON format and save under the <i>Central_Storage_Data</i> folder as JSON files. The data is partitioned by username, year, and month. This task only incrementally insert new records to existing JSON files and do not update existing records in the storage, or create a new file and insert the new records to the newly create JSON files if the JSON files have never been created. 
@@ -98,4 +101,6 @@ After the new records is available in the <i>ctr__streaming_history</i> table, t
 This task would utilize the functions available in <i>export.py</i> saved under the [ELT](../../../Setup/dags/ELT) folder under the [dags](../../../Setup/dags) folder.
 
 #### Task 13: Remove Caches in GoodData after Output Table has Refreshed
-Not available. This task will be updated in the future release.
+Remove caches in GoodData.CN and allow GoodData.CN to query the refreshed data.
+<br><br>
+This task would utilize the functions available in <i>export.py</i> saved under the [ELT](../../../Setup/dags/ELT) folder under the [dags](../../../Setup/dags) folder.

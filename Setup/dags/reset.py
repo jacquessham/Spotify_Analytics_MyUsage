@@ -1,6 +1,7 @@
 import os
 from datetime import datetime, timedelta
 from airflow import DAG
+from airflow.operators.bash import BashOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 
 
@@ -14,7 +15,7 @@ with DAG(
 	default_args=default_args,
 	dag_id='dev_reset_v1',
 	start_date=datetime(2023,7,15),
-	schedule_interval='0 2 * * Mon'
+	schedule_interval=None
 	) as dag:
 	task1 = PostgresOperator(
 		task_id='reset_tables',
