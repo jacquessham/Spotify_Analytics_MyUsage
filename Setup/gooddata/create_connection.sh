@@ -33,6 +33,9 @@ curl http://localhost:3000/api/v1/layout/dataSources/ps-gooddata-spotify/physica
   -H "Content-Type: application/json" \
   -X PUT -d @pdm.json
 
+# Delete pdm.json
+rm pdm.json
+
 # Refresh the data source
 curl http://localhost:3000/api/v1/actions/dataSources/ps-gooddata-spotify/uploadNotification -X POST \
   -H "Authorization: Bearer YWRtaW46Ym9vdHN0cmFwOmFkbWluMTIz"

@@ -14,10 +14,10 @@ First, execute the following code on command line to trigger Docker to run:
 
 ```
 # Step 1: Initiate Airflow
-docker-compose -d airflow-init
+docker-compose up -d airflow-init
 
 # Step 2: Initiate the whole docker network
-docker-compose -d up
+docker-compose up -d
 ```
 
 Note on folder: 
