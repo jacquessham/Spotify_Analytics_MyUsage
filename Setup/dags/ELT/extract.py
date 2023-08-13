@@ -17,14 +17,14 @@ def get_allfiles(cursor, root_dir):
         """ select distinct filename from src__data.src__upload_log"""
         )
     files_uploaded = [row[0] for row in cursor.fetchall()]
-    print(files_uploaded)
+    
 
     files_dir = []
     for root, dirs, files in os.walk(root_dir):
         for file in files:
             if file not in files_uploaded and '.json' in file:
                 files_dir.append(os.path.join(root, file))
-    print(files_dir)
+    
     return files_dir
 
 def build_insert_query(data_type, record, filename, username=None):
@@ -116,7 +116,10 @@ def extract_full():
 def extract_last12mos():
     root_dir = 'Data/last_12mos'
     conn, cursor = declare_conn()
-    list_files = get_allfiles(cursor, root_dir)
+    list_files = []
+    all_dirs = [f.path for f in os.scandir(root_dir)if f.is_dir()]
+    for curr_dir in all_dirs:
+        list_files += get_allfiles(cursor, curr_dir)
     read_files(cursor, 'last_12mos', list_files)
     update_log(cursor, 'last_12mos', list_files)
     conn.close()

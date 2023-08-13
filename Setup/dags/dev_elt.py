@@ -4,9 +4,11 @@ from datetime import datetime, timedelta
 import json
 import pandas as pd
 from airflow import DAG
+from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from ELT.extract import extract_full, extract_last12mos
+from ELT.export import export_direct, export_update
 
 
 default_args = {
@@ -69,6 +71,18 @@ with DAG(
 		postgres_conn_id='postgres_airflow_docker_spotify',
 		sql='ELT/out_stream_history.sql'
 		)
+	task11 = PythonOperator(
+		task_id='11__export_json_update',
+		python_callable=export_update
+		)
+	task12 = PythonOperator(
+		task_id='12__export_json_direct',
+		python_callable=export_direct
+		)
+	task13 = BashOperator(
+		task_id='13__refresh_output_tables',
+		bash_command='ELT/refresh_output_tables.sh'
+		)
 
 
 	task1 >> [task5, task6] 
@@ -77,4 +91,6 @@ with DAG(
 	task4 >> [task5, task6] 
 	task5 >> task7
 	task6 >> task7
-	task7 >> task8 >> task9 >> task10
+	task7 >> task8 >> task9 >> task10 >> task13
+	task9 >> task11 >> task12
+
