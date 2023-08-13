@@ -202,7 +202,7 @@ services:
 
 # Container for GoodData
   gooddata-cn-ce:
-    image: gooddata/gooddata-cn-ce:latest
+    image: gooddata/gooddata-cn-ce:2.2
     container_name: gooddata-cn-spotify
     ports:
       - "3000:3000"
