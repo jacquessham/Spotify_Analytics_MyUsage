@@ -60,6 +60,7 @@ def build_insert_query(data_type, record, filename, username=None):
 
 def read_files(cursor, data_type, list_files):
     for filename in list_files:
+        print(f"Now uploading {filename}")
         with open(filename, encoding='utf-8') as j:
             records = json.load(j)
         for record in records:
@@ -71,6 +72,7 @@ def read_files(cursor, data_type, list_files):
                 insert_query = build_insert_query(data_type, record, 
                     source_name[-1], source_name[-2])
             cursor.execute(insert_query)
+        print(f"Successfully upload all data in {filename}")
 
 def update_log(cursor, data_type, list_files):
     for file in list_files:

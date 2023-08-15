@@ -123,6 +123,7 @@ def export_update():
         curr_ids = df_temp['new_row_id'].tolist()
 
         # Load the file
+        print(f"Now updating {curr_file_directory}...")
         with open(curr_file_directory,'r') as f1:
             df_ctr_dict = json.load(f1)
 
@@ -153,6 +154,7 @@ def export_update():
         # Save the file
         with open(curr_file_directory,'w') as f2:
             json.dump(df_ctr_dict, f2, indent=4, ensure_ascii=False)
+        print(f"Successfully made updates to {curr_file_directory}")
 
 
 def export_direct():
@@ -223,17 +225,19 @@ def export_direct():
             # Save dataset
             # If the file exist already, add new records
             if os.path.exists(file_fullpath):
-                print(file_fullpath)
-                print(os.path.exists(file_fullpath))
+                print(f"{file_fullpath} has existing file, making updates to existing dataset...")
                 with open(file_fullpath,'r') as f1:
                     df_exist = json.load(f1)
                     df_exist.update(df_json)
                 with open(file_fullpath,'w') as f2:
                     json.dump(df_exist, f2, indent=4, ensure_ascii=False)
+                print(f"Successfully saved new dataset to existing file")
             # If the file is not existed, create a new one
             else:
+                print(f"Now saving to {file_fullpath}")
                 with open(file_fullpath, 'w') as f:
                     json.dump(df_json, f, indent=4, ensure_ascii=False)
+                print(f"Successfully saved to {file_fullpath}")
 
             # Update the logs in the 
             # ctr__data.ctr__json_streaming_history_record_type table
