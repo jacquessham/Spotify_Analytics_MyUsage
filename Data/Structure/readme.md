@@ -1,5 +1,5 @@
 # Sturctures of the Source Data
-This folder will explain the structures of the source data. Note that, the data structure of transformed data in the data lake should be found in the <b>(Coming soon...)</b> folder.
+This folder will explain the structures of the source data. Note that, the data structure of transformed data in the data lake should be found in the [ELT](../ELT) folder.
 
 ## Listening Records
 
@@ -27,7 +27,7 @@ For the sake of this project, we will only need StreamingHistory<b>N</b>.json. I
 	<li>endTime: The time the track stopped Playing in UTC, the format is YYYY-MM-DD HH:MM. Same as <b>ts</b> in the Full Record dataset. </li>
 	<li>artistName: The artist name of the song. Same as <b>master_metadata_album_artist_name</b> in the Full Record dataset. </li>
 	<li>trackName: The name of the song/podcast. Same as <b>master_metadata_track _name</b> in the Full Record dataset</li>
-	<li>msPlayed: How long did the song/podcast was played in milliseconds (ms). Same as <b></b> in the Full Record dataset</li>
+	<li>msPlayed: How long did the song/podcast was played in milliseconds (ms). Same as <b>ms_played</b> in the Full Record dataset</li>
 </ul>
 
 
@@ -45,6 +45,9 @@ An example of the Last 12 Months Record row looks like this:
 ]
 ```
 
+<br><br>
+You may find the details in Spotify Data privacy <a href="https://support.spotify.com/us/article/understanding-my-data/">documentation page</a>.
+
 ### Full Record
 After you have requested the <b>Account Data</b> from Spotify (The one received in 30 days, Spotify refers it as <b>Extended Streaming History</b>), you will receive a zip file contains the following:
 <ul>
@@ -54,8 +57,37 @@ After you have requested the <b>Account Data</b> from Spotify (The one received 
 <br><br>
 The zip file does not contain other files available in the Last 12 Months Record. However, the Streaming History files contain more columns in the Extended Streaming History. <b>It is preferred to upload the Full Record to the data lake!</b>
 
-#### Columns in StreamingHistoryN.json
+#### Columns in StreamingHistory_Audio_(period).json
+The full dataset zip file received from Spotify contains a handful of <i>StreamingHistory_Audio_(period).json</i>, where period stated the date interval of the records. Each record contains more information than <i>StreamingHistoryN.json</i>. Here are the columns could be found in each record:
+
 <br><br>
+<ul>
+  <li>ts: The time the track stopped Playing in UTC, the format is YYYY-MM-DD HH:MM. Same as <b>endTime</b> in the Last 12 Months dataset. </li>
+  <li>username: The Spotify username</li>
+  <li>platform: Which platform the song was played, eg, iOS, Android, Chromecast</li>
+  <li>ms_Played: How long did the song/podcast was played in milliseconds (ms). Same as <b>msPlayed</b> in the Last 12 Months dataset.</li>
+  <li>conn_country: The location (country code) where the song was played</li>
+  <li>ip_addr_decrypted: IP Address connected when the song was played</li>
+  <li>user_agent_decrypted: User Agent when the songs was played, eg, browser like Firefox or Safair</li>
+  <li>master_metadata_track _name: The name of the song/podcast. Same as <b>trackName</b> in the Last 12 Months dataset.</li> 
+  <li>master_metadata_album_artist_name: The artist name of the song. Same as <b>artistName</b> in the Last 12 Months dataset. </li>
+  <li>master_metadata_album_album_name: The album name the song belongs to. Null means the song do not assoicated with any album</li>
+  <li>spotify_track_uri: Spotify Track URI to identify the unique music track</li>
+  <li>episode_name: Podcast name</li>
+  <li>episode_show_name: Show name of the podcast belongs to</li>
+  <li>spotify_episode_uri: Spotify Track URI to identify the unique podcast track</li>
+  <li>reason_start: The reason the song start, including: <i>Click Row</i>, <i>Forward Button</i>, <i>Play Button</i>, and <i>Track Done</i></li>
+  <li>reason_end: The reason the song start, including: <i>End Play</i>, <i>Forward Button</i>,  and <i>Track Done</i></li>
+  <li>shuffle: Whether the song is played under shuffle mode. True of False.</li>
+  <li>skipped: Whether the song is skipped by the user to the next song. True or False.</li>
+  <li>offline: Whether the song is played offline. True or False.</li>
+  <li>offline_timestamp: <i>ts</i> while played offline, usually same as <i>ts</i></li>
+  <li>incognito_mode: Whether the song is played in the incognito mode. True or False</li>
+
+  
+</ul>
+<br><br>
+
 An example of the Full Record row looks like this:
 ```
 {
@@ -83,6 +115,12 @@ An example of the Full Record row looks like this:
 }
 ```
 
+You may find the details in Spotify Data privacy <a href="https://support.spotify.com/us/article/understanding-my-data/">documentation page</a>.
+
 ## Scripts
 ### Explore_datastructure.py
 This script allows you quickly have a glance of a row in the Full Record in a prettified JSON format. <b>Be sure to change your directory before executing!</b>
+
+
+## Reference
+Spotify Data privacy <a href="https://support.spotify.com/us/article/understanding-my-data/">documentation page</a>
