@@ -1,0 +1,17 @@
+{
+  "data": {
+    "id": "spotify_streaming_history_{{workspace_id}}",
+    "type": "workspace",
+    "attributes": {
+      "name": "Spotify Streaming History Analysis ({{username}}})"
+    },
+    "relationships": {
+      "parent": {
+        "data": {
+          "id": "spotify_streaming_history_master",
+          "type": "workspace"
+        }
+      }
+    }
+  }
+}
