@@ -3,10 +3,11 @@ import json
 from datetime import datetime
 import pandas as pd
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+from connection_ids import psql_conn
 
 
 def declare_conn():
-    psql_hook = PostgresHook(postgres_conn_id='postgres_airflow_docker_spotify')
+    psql_hook = PostgresHook(postgres_conn_id=psql_conn)
     conn = psql_hook.get_conn()
     cursor = conn.cursor()
     conn.autocommit = True
