@@ -35,7 +35,10 @@ Once you have the data obtained from Spotify, you may upload the data in the [Da
 Once Airflow is ready, you may go to <i>http://localhost:8080/</i> and log into Airflow. The username and password are both <i>airflow</i> if you did not change it in the <i>docker-compose.yaml</i> file. The DAGs for the ELT pipeline is prepared in the <i>dags</i> folder already, and the workflow should automatically execute since the start date is backdated to July 2023. You may find more details about the DAG scripts in the [ELT Pipeline](../Data/ELT/Pipeline) folder.
 
 ## GoodData Setup
-After GoodData is ready, log in with the default login password for the community edition, which can be found in GoodData's <a href="https://www.gooddata.com/developers/cloud-native/doc/2.4/deploy-and-install/community-edition/">documentation</a> page. After you have login successfully, you may execute the following code on the command line to connect the database, set up the master workspace:
+After GoodData is ready, log in with the default login password for the community edition, which can be found in GoodData's <a href="https://www.gooddata.com/developers/cloud-native/doc/2.4/deploy-and-install/community-edition/">documentation</a> page. After you have login successfully, you may trigger the <i>init_gooddata</i> DAG in Airflow.
+
+<br><br>
+Alternatively, you may execute the following code on the command line to connect the database, and set up the master workspace if you want to set up GoodData manually:
 
 ```
 # Create new master workspace
@@ -49,7 +52,7 @@ sh gooddata/setup_master_ws.sh
 ```
 
 <br><br>
-The <i>gooddata</i> folder is also where the pre-defined payload stored, ie, the workspace layout to set up the dashboard automatically with pre-defined metadata.
+The <i>gooddata</i> folder is also where the pre-defined payload stored, ie, the workspace layout,<i>spotify_streaming_history_master_layout.json</i> , to set up the dashboard automatically with pre-defined metadata.
 
 ## Dash Server Setup
 <b>Coming in the next update!</b>
