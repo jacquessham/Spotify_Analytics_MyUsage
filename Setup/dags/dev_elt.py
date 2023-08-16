@@ -9,6 +9,7 @@ from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from ELT.extract import extract_full, extract_last12mos
 from ELT.export import export_direct, export_update
+from connection_ids import psql_conn
 
 
 default_args = {
@@ -25,22 +26,22 @@ with DAG(
 	) as dag:
 	task1 = PostgresOperator(
 		task_id='1__create_tables_src',
-		postgres_conn_id='postgres_airflow_docker_spotify',
+		postgres_conn_id=psql_conn,
 		sql='ELT/create_tables_src.sql'
 		)
 	task2 = PostgresOperator(
 		task_id='2__create_tables_stg',
-		postgres_conn_id='postgres_airflow_docker_spotify',
+		postgres_conn_id=psql_conn,
 		sql='ELT/create_tables_stg.sql'
 		)
 	task3 = PostgresOperator(
 		task_id='3__create_tables_ctr',
-		postgres_conn_id='postgres_airflow_docker_spotify',
+		postgres_conn_id=psql_conn,
 		sql='ELT/create_tables_ctr.sql'
 		)
 	task4 = PostgresOperator(
 		task_id='4__create_tables_out',
-		postgres_conn_id='postgres_airflow_docker_spotify',
+		postgres_conn_id=psql_conn,
 		sql='ELT/create_tables_out.sql'
 		)
 	task5 = PythonOperator(
@@ -53,22 +54,22 @@ with DAG(
 		)
 	task7 = PostgresOperator(
 		task_id='7__distinct_streaming_history',
-		postgres_conn_id='postgres_airflow_docker_spotify',
+		postgres_conn_id=psql_conn,
 		sql='ELT/distinct_stream_history.sql'
 		)
 	task8 = PostgresOperator(
 		task_id='8__transform_streaming_history_upgrade',
-		postgres_conn_id='postgres_airflow_docker_spotify',
+		postgres_conn_id=psql_conn,
 		sql='ELT/transform_stream_history_upgrade.sql'
 		)
 	task9 = PostgresOperator(
 		task_id='9__transform_streaming_history_direct_insert',
-		postgres_conn_id='postgres_airflow_docker_spotify',
+		postgres_conn_id=psql_conn,
 		sql='ELT/transform_stream_history_direct_insert.sql'
 		)
 	task10 = PostgresOperator(
 		task_id='10__insert_out_streaming_history',
-		postgres_conn_id='postgres_airflow_docker_spotify',
+		postgres_conn_id=psql_conn,
 		sql='ELT/out_stream_history.sql'
 		)
 	task11 = PythonOperator(
