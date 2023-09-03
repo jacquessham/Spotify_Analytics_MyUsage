@@ -2,7 +2,7 @@
 
 ## Version 0.0.4 (Alpha)
 * Update ELT Pipeline to convert the columns Reason Start and Reason End in Output Stage tables from abbreviation code to Readable values.
-* Add features DAG on setting up GoodData to create children workspace based on usernames
+* Add features DAG on creating shell scripts to create children workspace in GoodData based on usernames
 
 ## Version 0.0.3 (Alpha)
 * ELT Pipelines print logs on what files the pipeline is reading or saving

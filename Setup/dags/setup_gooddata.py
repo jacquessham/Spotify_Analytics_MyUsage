@@ -4,6 +4,7 @@ import airflow
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.bash import BashOperator
+from airflow.operators.python import PythonOperator
 from airflow.providers.postgres.operators.postgres import PostgresOperator
 from connection_ids import psql_conn
 from dag_gooddata.setup_ws import create_child_ws, apply_ws_filter
@@ -35,7 +36,7 @@ with DAG(
 	task103 = PostgresOperator(
 		task_id='103__create_ws_lcm_table',
 		postgres_conn_id=psql_conn,
-		sql='Edag_gooddata/create_ws_lcm_table.sql'
+		sql='dag_gooddata/create_tables_lcm.sql'
 		)
 	task104 = PostgresOperator(
 		task_id='104__update_username_list',

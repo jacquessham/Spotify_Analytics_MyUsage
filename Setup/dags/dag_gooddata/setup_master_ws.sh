@@ -1,5 +1,5 @@
 # Upload master workspace layout
-curl http://gooddata-cn-ce/api/v1/layout/workspaces/spotify_streaming_history_master \
+curl gooddata-cn-spotify:3000/api/v1/layout/workspaces/spotify_streaming_history_master \
   -H "Content-Type: application/json" \
   -H "Accept: application/json" \
   -H "Authorization: Bearer YWRtaW46Ym9vdHN0cmFwOmFkbWluMTIz" \
