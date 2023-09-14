@@ -19,13 +19,12 @@ default_args = {
 }
 
 today = date.today()
-last_monday = today - timedelta(days=today.weekday(), weeks=0)
-last_monday = datetime.combine(last_monday, datetime.min.time())
+past_monday = today - timedelta(days=-today.weekday(), weeks=1)
 
 with DAG(
 	default_args=default_args,
-	dag_id='elt_v1',
-	start_date=last_monday,
+	dag_id='elt',
+	start_date=datetime.combine(past_monday, datetime.min.time()),
 	schedule_interval='0 4 * * Mon'
 	) as dag:
 	task1 = PostgresOperator(
