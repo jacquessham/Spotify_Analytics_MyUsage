@@ -71,7 +71,7 @@ reason_end,
 shuffle::boolean,
 skipped::boolean,
 offline::boolean,
-offline_timestamp::int,
+left(offline_timestamp,10)::int,
 incognito_mode::boolean
 from stg__data.stg__streaming_history__unique
 where row_id in (
