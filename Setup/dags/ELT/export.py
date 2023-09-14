@@ -24,7 +24,7 @@ def get_filename(root_dir, username, year_month):
     if not os.path.exists(f"{root_dir}/{username}/{curr_year}"):
         os.makedirs(f"{root_dir}/{username}/{curr_year}")
     # Done creating folder and safe to save
-    return (f"{root_dir}/{username}/{username}_{year_month}.json",
+    return (f"{root_dir}/{username}/{curr_year}/{username}_{year_month}.json",
             f"{username}_{year_month}.json")
 
 def update_log(cursor, row_id, record_type, filename, file_fullpath):
