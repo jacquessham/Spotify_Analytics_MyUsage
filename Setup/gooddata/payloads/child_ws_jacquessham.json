@@ -1,0 +1,17 @@
+{
+    "data": {
+        "id": "spotify_streaming_history_jacquessham",
+        "type": "workspace",
+        "attributes": {
+            "name": "Spotify Streaming History Analysis (jacquessham)"
+        },
+        "relationships": {
+            "parent": {
+                "data": {
+                    "id": "spotify_streaming_history_master",
+                    "type": "workspace"
+                }
+            }
+        }
+    }
+}

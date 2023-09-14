@@ -16,7 +16,7 @@ We have two main goals for this solution:
 
 ## Dashboard Requirement
 <ul>
-	<li>KPI:
+	<li>KPI used in GoodData:
 		<ul>
 			<li>Number of times played</li>
 			<li>Total Played Time</li>
@@ -26,7 +26,6 @@ We have two main goals for this solution:
 			<li>Number/Percentage of Skipped songs</li>
 			<li>Number/Percentage of shuffled songs</li>
 			<li>Number/Percentage of songs played offline</li>
-			<li>More coming soon...</li>
 		</ul>
 	</li>
 	<li>Trend Analysis</li>

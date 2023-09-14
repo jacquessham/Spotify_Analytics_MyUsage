@@ -9,8 +9,10 @@ The listening records are obtained from Spotify directly. You may request the da
 Due to privacy, my full listening record will not be posted in this repository but saved in my local machine. However, the pipeline is designed to ingest dynamically which is not user-specify. Therefore, you may still able to utilize the pipeline for your own use.
 
 ## Type of Data
-### Listening Records
-The listen record data is obtained from Spotify that is the record of what songs and podcast a user has listened in Spotify within an interval of time, ie, last 12 months, or lifetime. It is the core fact data we will be utilized in this project. You may find more details about the dataset in the [Structures of Source Data](/Structure) folder.
+### Streaming Records
+The streaming record data is obtained from Spotify that is the record of what songs and podcast a user has listened in Spotify within an interval of time, ie, last 12 months, or lifetime. It is the core fact data we will be utilized in this project. You may find more details about the dataset in the [Structures of Source Data](/Structure) folder.
+<br><br>
+We refer these two types of data: <b>Full dataset</b> and <b>Last 12 Months Data</b>, which Last 12 Months Data contain less attribute values than Full dataset.
 
 ## ETL Pipeline
 The proposed ETL pipeline looks like this:

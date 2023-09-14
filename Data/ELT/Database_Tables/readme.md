@@ -135,13 +135,18 @@ Save the metadata of each record row, use to keep track whether record is last 1
 <br><br>
 Columns:
 <ul>
-	<li>Coming soon...</li>
+	<li>record_id - varchar(512) <b>Primary Key</b>: Random number for a unique number for primary key</li>
+	<li>row_id - varchar(512): The row id of the record in the <i>ctr__streaming_history</i> table</li>
+	<li>record_type - varchar(512): Indicate whether the format of the record is full record or last 12 month</li>
+	<li>filename - varchar(512): State the file name where this row has been saved to</li>
+	<li>file_directory - varchar(512): State the directory where the file is saved</li>
+	<li>last_updated_date: The update date of this record</li>
 </ul>
 
 ## Central Storage Flatfile Storage
 Flatfile folder to storage data in JSON format (Only storage not hosted in Postgres). The records are the same with the <i>Central Storage Schema</i>
 <br><br>
-Coming soon...
+The Flatfile folder is saved under [Central Storage Data](../../../Central_Storage_Data). The JSON files are partition by <b>username</b>, <b>year</b>, and <b>month</b>, and the filename format is <i>username_year_month.json</i>.
 
 ## Output Stage for Dashboards
 The schema for data to be exposed to dashboard applications for both GoodData and Dash Server.

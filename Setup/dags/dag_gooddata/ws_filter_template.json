@@ -1,0 +1,15 @@
+{
+  "workspaceDataFilters": [
+    {
+      "id": "user_streaminghistory_filter",
+      "title": "Workspace Filter",
+      "columnName": "username",
+      "workspace": {
+        "id": "spotify_streaming_history_master",
+        "type": "workspace"
+      },
+      "workspaceDataFilterSettings": [
+      ]
+    }
+  ]
+}
