@@ -50,7 +50,7 @@ You may access the dashboard hosted by GoodData.CN at <i>http://localhost:3000</
 <img src=gd_example.png>
 
 <br><br>
-You may visit the [Gallery](/Instruction/Gallery) folder to look at the dashboard screenshots.
+You may visit the [Gallery](/Instructions/Gallery) folder to look at the dashboard screenshots.
 
 ## Setup
 If you are an administrator to initiate the backend and dashboard, you would first initiate the Docker network defined in the Setup folder and it would automatically set up for you. Once Airflow is ready, you are expected to supply the data set and maintain the data pipeline. And finally, you would also setup and maintain the backend of GoodData.CN. You may find more details on how to setup the application with Docker in the [Setup](/Setup) folder.
