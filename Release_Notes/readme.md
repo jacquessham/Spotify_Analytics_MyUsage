@@ -1,5 +1,10 @@
 # Release Note
 
+## Version 0.1.0 (Beta)
+* Documentation is ready
+* Fix bug on ELT Pipeline when creating primary keys
+* Change start day of the ELT DAG to last monday to avoid duplicated jobs while having more than one trigger with the same DAG
+
 ## Version 0.0.4 (Alpha)
 * Update ELT Pipeline to convert the columns Reason Start and Reason End in Output Stage tables from abbreviation code to Readable values.
 * Add features DAG on creating shell scripts to create children workspace in GoodData based on usernames

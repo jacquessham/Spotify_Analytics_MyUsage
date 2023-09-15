@@ -77,7 +77,8 @@ Task 7 would remove duplicated records if there are two files with two different
 Task 7 would detect that and remove the duplicated history, and insert one into <i>stg__streaming_history__unique</i>. However, Task 7 only distinguish with the same record type source. If we have one record of full data format, and two records of last 12 months format, Task 7 would insert one record of full data format and one record of last 12 month format.
 <br><br>
 This task would utilize the functions available in <i>distinct_stream_history.sql</i> saved under the [ELT](../../../Setup/dags/ELT) folder under the [dags](../../../Setup/dags) folder.
-
+<br><br>
+<b>Note: Currently the primary key concatenate username, song name, timestamp and data type. In some cases, different records may shared with the same primary key because those attributes values used to construct primary keys are the same while other attributes values are distinct with each other. The current version would only preserve the record with longest ms_played value and discard the rest. This bug will be fixed in the coming version.</b>
 
 
 #### Task 8: Update Records in Central Storage Schema
